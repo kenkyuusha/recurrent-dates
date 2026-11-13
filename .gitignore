@@ -1,0 +1,16 @@
+# editors
+.vscode
+*.iml
+.idea
+
+# npm
+node_modules
+
+# The compiled plugin is attached to GitHub releases, not committed.
+main.js
+*.map
+
+# Obsidian writes the user's settings here when the repo is used as a plugin folder.
+data.json
+
+.DS_Store

@@ -1,0 +1,10 @@
+{
+	"id": "years-ago",
+	"name": "Years Ago",
+	"version": "0.1.0",
+	"minAppVersion": "1.8.7",
+	"description": "See what happened on this day in any year, using the dates you already link in your notes.",
+	"author": "kenkyuusha",
+	"authorUrl": "https://github.com/kenkyuusha",
+	"isDesktopOnly": false
+}
