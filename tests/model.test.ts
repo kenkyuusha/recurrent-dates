@@ -12,6 +12,7 @@ function modelFor(
 	month: number,
 	day: number,
 	overrides: Partial<CoreSettings> = {},
+	hostPath?: string,
 ): DayModel {
 	const vault = fakeVault(notes);
 	const keys = dayKeysFor(year, month, day);
@@ -25,6 +26,7 @@ function modelFor(
 		ownDateOf: vault.ownDateOf,
 		parseLinkDate,
 		settings: { ...TEST_SETTINGS, ...overrides },
+		hostPath,
 	});
 }
 
@@ -137,6 +139,15 @@ describe('buildDayModel', () => {
 	it('labels links to the viewed year as year zero', () => {
 		const notes = { 'log.md': 'session: [[2031-03-20]]' };
 		expect(summary(modelFor(notes, 2031, 3, 20))).toEqual(['2031 (0) event log']);
+	});
+
+	it('lists nothing from the note the list is embedded in', () => {
+		const lines = summary(modelFor(VAULT, 2026, 12, 8, {}, 'daily/2024-12-08.md'));
+		expect(lines).toEqual([
+			'1894 (132) death pafnuty chebyshev',
+			'2017 (9) event weather station',
+			'2024 (2) event 2024-12-09',
+		]);
 	});
 
 	it('reads property links from their property name', () => {

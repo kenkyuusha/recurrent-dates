@@ -1,0 +1,165 @@
+/* Years Ago: the "On this day" panel and code block.
+   Colors and sizes come from Obsidian's variables so themes apply. */
+
+.years-ago-view {
+	padding: var(--size-4-2) var(--size-4-3) var(--size-4-8);
+}
+
+.years-ago-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--size-4-2);
+}
+
+.years-ago-date {
+	flex: 1;
+	text-align: center;
+	font-size: var(--font-ui-large);
+	font-weight: var(--font-semibold);
+	color: var(--text-normal);
+}
+
+.years-ago-today {
+	margin: var(--size-2-1) auto 0;
+	width: fit-content;
+	padding: var(--size-2-1) var(--size-4-2);
+	border-radius: var(--radius-s);
+	font-size: var(--font-ui-smaller);
+	color: var(--text-accent);
+	cursor: var(--cursor);
+}
+
+.years-ago-today:hover {
+	background-color: var(--background-modifier-hover);
+}
+
+.years-ago-today.is-hidden {
+	visibility: hidden;
+}
+
+.years-ago-list {
+	margin-top: var(--size-4-2);
+}
+
+.years-ago-group {
+	margin-bottom: var(--size-4-4);
+}
+
+.years-ago-group-header {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--size-4-2);
+	padding-bottom: var(--size-2-1);
+	margin-bottom: var(--size-2-1);
+	border-bottom: var(--border-width) solid var(--background-modifier-border);
+}
+
+.years-ago-age {
+	font-size: var(--font-ui-small);
+	font-weight: var(--font-semibold);
+	color: var(--text-normal);
+}
+
+.years-ago-year {
+	font-size: var(--font-ui-smaller);
+	font-variant-numeric: tabular-nums;
+	color: var(--text-faint);
+}
+
+.years-ago-entry {
+	padding: var(--size-2-2) var(--size-4-2);
+	border-radius: var(--radius-s);
+	cursor: var(--cursor);
+}
+
+.years-ago-entry:hover,
+.years-ago-entry:focus-visible {
+	background-color: var(--background-modifier-hover);
+}
+
+.years-ago-entry-title {
+	display: flex;
+	align-items: baseline;
+	gap: var(--size-4-2);
+	font-size: var(--font-ui-small);
+	color: var(--text-normal);
+}
+
+.years-ago-entry-name {
+	overflow-wrap: anywhere;
+}
+
+.years-ago-kind {
+	flex-shrink: 0;
+	padding: 0 var(--size-2-3);
+	border-radius: var(--radius-s);
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	background-color: var(--background-modifier-border);
+}
+
+.years-ago-kind-note .years-ago-entry-name {
+	color: var(--text-muted);
+}
+
+.years-ago-entry-snippet {
+	margin-top: var(--size-2-1);
+	font-size: var(--font-ui-smaller);
+	line-height: var(--line-height-tight);
+	color: var(--text-muted);
+	overflow-wrap: anywhere;
+	white-space: pre-wrap;
+}
+
+.years-ago-match {
+	color: var(--text-accent);
+}
+
+.years-ago-more {
+	margin-left: var(--size-4-2);
+	color: var(--text-faint);
+}
+
+.years-ago-empty,
+.years-ago-error {
+	padding: var(--size-4-2);
+	font-size: var(--font-ui-small);
+	color: var(--text-muted);
+}
+
+.years-ago-error {
+	color: var(--text-error);
+}
+
+.years-ago-block {
+	padding: var(--size-4-2) var(--size-4-3);
+	border: var(--border-width) solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+}
+
+.years-ago-block-title {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--size-4-2);
+	font-size: var(--font-ui-small);
+	font-weight: var(--font-semibold);
+	color: var(--text-normal);
+}
+
+.years-ago-block-date {
+	font-weight: var(--font-normal);
+	color: var(--text-muted);
+}
+
+.years-ago-block .years-ago-group:last-child {
+	margin-bottom: 0;
+}
+
+.years-ago-setting-wide textarea {
+	width: 100%;
+	min-width: 16em;
+	min-height: 5em;
+}

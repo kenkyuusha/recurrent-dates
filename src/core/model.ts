@@ -76,6 +76,8 @@ export interface DayModelInput {
 	/** Parses a link target such as `folder/1894-12-08#h` into a date. */
 	parseLinkDate: (linkTarget: string) => DayDate | null;
 	settings: CoreSettings;
+	/** Note the list is embedded in; nothing from that note itself is listed. */
+	hostPath?: string;
 }
 
 const KIND_ORDER: Record<EntryKind, number> = { birth: 0, death: 1, event: 2, note: 3 };
@@ -154,6 +156,7 @@ export function buildDayModel(input: DayModelInput): DayModel {
 		else byYear.set(entry.date.year, [entry]);
 	};
 	const allowed = (path: string, date: DayDate) =>
+		path !== input.hostPath &&
 		!isInFolders(path, settings.excludedFolders) &&
 		(settings.showFuture || date.year <= input.year);
 
