@@ -1,6 +1,7 @@
 // ABOUTME: Reads the line around a date link to decide what the date means:
 // ABOUTME: a birth, a death, plain navigation between daily notes, or bookkeeping to skip.
 
+import { CODE_BLOCK_LANGUAGE } from './constants';
 import { daysBetween, type DayDate } from './dates';
 
 export type RefKind = 'birth' | 'death' | 'event';
@@ -34,6 +35,7 @@ const MAX_LABEL_LENGTH = 40;
 const WIKILINK = /!?\[\[([^\]\n]+?)\]\]/g;
 const LETTER_OR_DIGIT = /[\p{L}\p{N}]/u;
 const LETTERS_AND_DIGITS = /[\p{L}\p{N}]/gu;
+const OWN_BLOCK_OPEN = new RegExp(`^\\s*(\`{3,}|~{3,})\\s*${CODE_BLOCK_LANGUAGE}\\s*$`);
 const RANGE_JOINER = /^\s*[-‐-―−]\s*$/;
 // Keywords in scripts that separate words with spaces get whole-word matching.
 // Others (Japanese, Chinese) are matched as plain substrings.
@@ -182,17 +184,36 @@ function stripFrontmatter(lines: string[]): string[] {
 	return lines;
 }
 
+/** Drops this plugin's own code blocks, which say nothing about the day. */
+function withoutOwnBlocks(lines: string[]): string[] {
+	const kept: string[] = [];
+	let fence: string | null = null;
+	for (const line of lines) {
+		if (fence === null) {
+			const open = OWN_BLOCK_OPEN.exec(line);
+			if (open) fence = open[1] ?? '';
+			else kept.push(line);
+			continue;
+		}
+		const text = line.trim();
+		const closes = text.length >= fence.length && [...text].every((char) => char === fence?.charAt(0));
+		if (closes) fence = null;
+	}
+	return kept;
+}
+
 /**
  * Whether a dated note holds anything beyond navigation to neighbouring days.
- * A daily note that only says "yesterday / today / tomorrow" is not worth
- * listing as something written on that day.
+ * A daily note that only says "yesterday / today / tomorrow", with or without
+ * this plugin's own list embedded, is not worth listing as something written
+ * on that day.
  */
 export function hasMeaningfulContent(
 	lines: string[],
 	ownDate: DayDate,
 	parseLinkDate: (linkTarget: string) => DayDate | null,
 ): boolean {
-	for (const line of stripFrontmatter(lines)) {
+	for (const line of withoutOwnBlocks(stripFrontmatter(lines))) {
 		if (line.trim().length === 0) continue;
 		const links = [...line.matchAll(WIKILINK)];
 		if (links.length === 0) return true;

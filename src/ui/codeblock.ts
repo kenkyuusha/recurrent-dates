@@ -7,7 +7,6 @@ import { dayLabel, strings } from '../core/i18n';
 import type RecurrentDatesPlugin from '../main';
 import { renderDay } from './render';
 
-export const CODE_BLOCK_LANGUAGE = 'recurrent-dates';
 export const HOVER_SOURCE_BLOCK = 'recurrent-dates-block';
 
 interface BlockDay {

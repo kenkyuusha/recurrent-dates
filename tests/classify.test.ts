@@ -120,6 +120,17 @@ describe('hasMeaningfulContent', () => {
 		expect(check('')).toBe(false);
 	});
 
+	it("does not count the plugin's own code block as content", () => {
+		expect(check('前日: [[1894-12-07]]\n\n```recurrent-dates\n```\n')).toBe(false);
+		expect(check('前日: [[1894-12-07]]\n```recurrent-dates\ndate: 12-08\n```')).toBe(false);
+		expect(check('~~~recurrent-dates\n~~~')).toBe(false);
+	});
+
+	it('still counts other code blocks and text around the own block', () => {
+		expect(check('```js\nconsole.log(1)\n```')).toBe(true);
+		expect(check('```recurrent-dates\n```\nwent for a run')).toBe(true);
+	});
+
 	it('is true once the note says anything else', () => {
 		expect(check('前日: [[1894-12-07]]\nread about approximation theory')).toBe(true);
 		expect(check('前日: [[1894-12-07]]\n- [ ] [[some note]]')).toBe(true);

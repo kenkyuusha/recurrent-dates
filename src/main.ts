@@ -2,6 +2,7 @@
 // ABOUTME: sidebar view, the code block, the commands and the settings tab.
 
 import { debounce, getLanguage, Plugin, TFile } from 'obsidian';
+import { CODE_BLOCK_LANGUAGE } from './core/constants';
 import { toIso, type DayDate } from './core/dates';
 import { resolveLang, strings, type Lang } from './core/i18n';
 import type { DayModel } from './core/model';
@@ -13,7 +14,7 @@ import {
 	RecurrentDatesSettingTab,
 	type RecurrentDatesSettings,
 } from './settings';
-import { CODE_BLOCK_LANGUAGE, HOVER_SOURCE_BLOCK, RecurrentDatesBlock } from './ui/codeblock';
+import { HOVER_SOURCE_BLOCK, RecurrentDatesBlock } from './ui/codeblock';
 import { VIEW_TYPE_RECURRENT_DATES, RecurrentDatesView } from './ui/view';
 
 const REFRESH_DELAY_MS = 400;
