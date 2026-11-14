@@ -20,8 +20,10 @@ with how long ago it was. The data is the user's existing date links
 
 ## Guarantees
 
-- **Read-only.** The plugin never modifies notes. The only file it writes is
-  its own `data.json` (settings).
+- **Read-only.** The plugin never modifies notes. It writes its own
+  `data.json` (settings) and two device-local entries through
+  `App.saveLocalStorage`: a flag that the panel was added to the sidebar, and
+  the fold state of embedded blocks.
 - **Local.** No network requests, no telemetry.
 - **Mobile-safe.** No Node or Electron APIs, no regex lookbehind;
   `isDesktopOnly` is `false`.
@@ -40,11 +42,14 @@ with how long ago it was. The data is the user's existing date links
 | `src/core/snippet.ts` | Markdown line to plain snippet parts with a highlight |
 | `src/core/model.ts` | `buildDayModel`: filter, classify, dedupe, group by year |
 | `src/core/i18n.ts` | English and Russian strings, plural forms, day names |
+| `src/core/block-options.ts` | Options written inside the code block (`date`, `collapsed`) |
+| `src/core/fold-memory.ts` | `BlockFoldMemory`: which blocks the reader collapsed, bounded |
+| `src/core/constants.ts` | Names shared by the core and the Obsidian layer |
 | `src/indexer.ts` | `VaultIndexer`: metadata cache to `DateIndex`; lazy reads for one day |
 | `src/settings.ts` | Stored settings, defaults, conversion to core settings, settings tab |
 | `src/ui/render.ts` | Shared DOM rendering of a day's list |
 | `src/ui/view.ts` | Sidebar `ItemView` with day navigation |
-| `src/ui/codeblock.ts` | `recurrent-dates` code block |
+| `src/ui/codeblock.ts` | `recurrent-dates` code block with its collapsible header |
 | `src/main.ts` | Lifecycle, vault events, commands |
 | `tests/` | Vitest suites for `src/core`; `helpers/fake-vault.ts` stands in for the metadata cache |
 
@@ -89,6 +94,25 @@ Each rule has tests in `tests/`.
 - February 29 entries are shown on February 28 in common years.
 - "N years ago" is the viewed year minus the linked year; Russian uses the
   three plural forms.
+- A block starts in the state its `collapsed` option names, expanded when
+  there is none. A toggle is remembered per note and block options, on that
+  device only, and only while it differs from that starting state; at most
+  300 blocks are remembered, oldest dropped first.
+- The plugin's own code block never counts as content of a dated note.
+
+## Interface conventions borrowed from the app
+
+These are Obsidian internals rather than documented API, checked against the
+app's own code and stylesheet in 1.15.0:
+
+- The fold arrow is the app's own: icon `right-triangle` in an element with
+  class `collapse-icon`, rotated by the app when it also has `is-collapsed`.
+  `styles.css` repeats size and rotation only as zero-specificity fallbacks.
+- Clickable parts carry the class `interactive-child`, which the editor's
+  click handler for embedded blocks skips, and their click handlers call
+  `preventDefault()`, which that handler also respects.
+- In the editor the app overlays an "edit this block" button on the block's
+  top corner; the block header keeps `--size-4-10` of space free for it.
 
 ## Compatibility
 

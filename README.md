@@ -36,6 +36,11 @@ plugin on, holding Ctrl or Cmd while hovering shows a preview.
   In a note named after a date the block shows that day; anywhere else it
   shows today. To pin it to a day, add `date: 12-08` or `date: 1894-12-08`.
 
+  Select the block's header to collapse or expand it. The header keeps
+  showing how many entries the day has. Each device remembers the state per
+  note, so a block can stay folded on your phone and open on your desktop.
+  To make a block start collapsed, add `collapsed: true`.
+
 ## How dates are recognized
 
 A date is any link to a note whose name matches your date format
@@ -82,7 +87,8 @@ and Russian; other languages fall back to English.
 ## Privacy
 
 Recurrent Dates works entirely inside your vault. It makes no network requests,
-collects nothing, and never modifies your notes. It reads link positions from
+collects nothing, and never modifies your notes. Besides its settings, it
+stores only which blocks you collapsed, locally on each device. It reads link positions from
 Obsidian's metadata cache and reads note text only for the day being shown.
 
 ## Installing

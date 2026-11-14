@@ -4,6 +4,7 @@
 import { debounce, getLanguage, Plugin, TFile } from 'obsidian';
 import { CODE_BLOCK_LANGUAGE } from './core/constants';
 import { toIso, type DayDate } from './core/dates';
+import { BlockFoldMemory } from './core/fold-memory';
 import { resolveLang, strings, type Lang } from './core/i18n';
 import type { DayModel } from './core/model';
 import { VaultIndexer } from './indexer';
@@ -21,6 +22,8 @@ const REFRESH_DELAY_MS = 400;
 const DAY_CHECK_INTERVAL_MS = 60_000;
 /** Per-device flag: the panel is added to the sidebar once, then left to the user. */
 const VIEW_ADDED_KEY = 'recurrent-dates-view-added';
+/** Per-device record of which embedded blocks the reader collapsed or expanded. */
+const FOLD_MEMORY_KEY = 'recurrent-dates-block-folds';
 
 export default class RecurrentDatesPlugin extends Plugin {
 	settings: RecurrentDatesSettings = { ...DEFAULT_SETTINGS };
@@ -28,6 +31,8 @@ export default class RecurrentDatesPlugin extends Plugin {
 	lang: Lang = 'en';
 	/** Code blocks currently on screen, refreshed together with the panel. */
 	readonly blocks = new Set<RecurrentDatesBlock>();
+	/** Fold state of embedded blocks. Kept per device, so a phone and a desktop can differ. */
+	foldMemory = new BlockFoldMemory();
 
 	private indexedFormat = DEFAULT_SETTINGS.dateFormat;
 	private lastDay = '';
@@ -40,6 +45,7 @@ export default class RecurrentDatesPlugin extends Plugin {
 		this.lang = resolveLang(getLanguage());
 		this.indexedFormat = effectiveDateFormat(this.settings);
 		this.indexer = new VaultIndexer(this.app, this.indexedFormat);
+		this.foldMemory = BlockFoldMemory.parse(this.app.loadLocalStorage(FOLD_MEMORY_KEY));
 		const title = strings(this.lang).viewTitle;
 
 		this.registerView(VIEW_TYPE_RECURRENT_DATES, (leaf) => new RecurrentDatesView(leaf, this));
@@ -99,6 +105,15 @@ export default class RecurrentDatesPlugin extends Plugin {
 
 	buildDay(year: number, month: number, day: number, hostPath?: string): Promise<DayModel> {
 		return this.indexer.buildDay(year, month, day, toCoreSettings(this.settings), hostPath);
+	}
+
+	/** Stores a block's fold state and applies it to other copies of the same block. */
+	rememberFold(key: string, collapsed: boolean, defaultCollapsed: boolean, origin: RecurrentDatesBlock): void {
+		this.foldMemory.set(key, collapsed, defaultCollapsed);
+		this.app.saveLocalStorage(FOLD_MEMORY_KEY, this.foldMemory.serialize());
+		for (const block of this.blocks) {
+			if (block !== origin) block.syncFold(key, collapsed);
+		}
 	}
 
 	async activateView(): Promise<void> {

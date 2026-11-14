@@ -25,7 +25,11 @@ async function openEntry(entry: Entry, ctx: RenderContext, pane: PaneType | bool
 
 function renderEntry(parent: HTMLElement, entry: Entry, ctx: RenderContext): void {
 	const text = strings(ctx.lang);
-	const el = parent.createDiv({ cls: ['recurrent-dates-entry', `recurrent-dates-kind-${entry.kind}`] });
+	// `interactive-child` keeps a click on an entry from being read by the
+	// editor as a request to edit the block the list is embedded in.
+	const el = parent.createDiv({
+		cls: ['recurrent-dates-entry', `recurrent-dates-kind-${entry.kind}`, 'interactive-child'],
+	});
 	el.setAttr('role', 'link');
 	el.setAttr('tabindex', '0');
 
@@ -45,6 +49,7 @@ function renderEntry(parent: HTMLElement, entry: Entry, ctx: RenderContext): voi
 	}
 
 	el.addEventListener('click', (event) => {
+		event.preventDefault();
 		void openEntry(entry, ctx, Keymap.isModEvent(event));
 	});
 	el.addEventListener('auxclick', (event) => {

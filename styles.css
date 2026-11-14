@@ -30,8 +30,10 @@
 	cursor: var(--cursor);
 }
 
-.recurrent-dates-today:hover {
-	background-color: var(--background-modifier-hover);
+@media (hover: hover) {
+	.recurrent-dates-today:hover {
+		background-color: var(--background-modifier-hover);
+	}
 }
 
 .recurrent-dates-today.is-hidden {
@@ -74,9 +76,16 @@
 	cursor: var(--cursor);
 }
 
-.recurrent-dates-entry:hover,
 .recurrent-dates-entry:focus-visible {
 	background-color: var(--background-modifier-hover);
+}
+
+/* Hover only where there is a pointer, so a tapped row does not stay
+   highlighted on phones. */
+@media (hover: hover) {
+	.recurrent-dates-entry:hover {
+		background-color: var(--background-modifier-hover);
+	}
 }
 
 .recurrent-dates-entry-title {
@@ -139,19 +148,77 @@
 	border-radius: var(--radius-m);
 }
 
-.recurrent-dates-block-title {
+/* The block header is one button: arrow, title, count, and the day on the right. */
+.recurrent-dates-block-header {
 	display: flex;
-	align-items: baseline;
-	justify-content: space-between;
+	align-items: center;
 	gap: var(--size-4-2);
+	margin: calc(var(--size-2-1) * -1) calc(var(--size-2-3) * -1);
+	padding: var(--size-2-1) var(--size-2-3);
+	border-radius: var(--radius-s);
 	font-size: var(--font-ui-small);
+	cursor: var(--cursor);
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.recurrent-dates-block-header:focus-visible {
+	background-color: var(--background-modifier-hover);
+}
+
+@media (hover: hover) {
+	.recurrent-dates-block-header:hover {
+		background-color: var(--background-modifier-hover);
+	}
+}
+
+/* The arrow is Obsidian's own fold arrow (class collapse-icon), so its look
+   and rotation follow the app and the theme. These zero-specificity rules only
+   step in if those styles are ever missing. */
+:where(.recurrent-dates-collapse) {
+	display: flex;
+	align-items: center;
+}
+
+:where(.recurrent-dates-collapse svg.svg-icon) {
+	width: 10px;
+	height: 10px;
+	stroke-width: 4px;
+	transition: transform 100ms ease-in-out;
+}
+
+:where(.recurrent-dates-collapse.is-collapsed svg.svg-icon) {
+	transform: rotate(calc(var(--direction, 1) * -1 * 90deg));
+}
+
+.recurrent-dates-collapse {
+	flex-shrink: 0;
+}
+
+.recurrent-dates-block-title {
 	font-weight: var(--font-semibold);
 	color: var(--text-normal);
 }
 
+.recurrent-dates-block-count {
+	font-size: var(--font-ui-smaller);
+	font-variant-numeric: tabular-nums;
+	color: var(--text-faint);
+}
+
 .recurrent-dates-block-date {
-	font-weight: var(--font-normal);
+	margin-inline-start: auto;
 	color: var(--text-muted);
+}
+
+/* In the editor Obsidian overlays an "edit this block" button on the block's
+   top corner. Keep the end of the header clear of it. */
+.markdown-source-view.mod-cm6 .cm-preview-code-block .recurrent-dates-block-header {
+	padding-inline-end: var(--size-4-10);
+}
+
+.recurrent-dates-block.recurrent-dates-collapsed .recurrent-dates-list {
+	display: none;
 }
 
 .recurrent-dates-block .recurrent-dates-group:last-child {
