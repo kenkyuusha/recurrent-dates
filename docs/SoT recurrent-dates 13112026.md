@@ -3,8 +3,12 @@
 - Project: Recurrent Dates, an Obsidian community plugin (id `recurrent-dates`)
 - Owner: kenkyuusha
 - Updated: 2026-11-14
-- Status: 0.1.0 is the first release (tag `0.1.0`, 2026-11-14). Not yet
-  submitted to the community directory. Checked in the app by the
+- Status: released, and listed in Obsidian's community directory since
+  2026-11-14 (https://community.obsidian.md/plugins/recurrent-dates). The
+  directory's automated review of 0.1.0 found 18 type warnings, all from one
+  Moment.js call, and noted that the plugin enumerates the vault's files.
+  0.1.1 removes the warnings without changing behaviour; the enumeration is
+  how the index is built. Checked in the app by the
   owner on 2026-11-14, on desktop Obsidian 1.15.0 and on Obsidian mobile
   (iOS): reported working in full, including opening notes from the list.
   Windows, Linux and Android have not been tried.
@@ -125,6 +129,11 @@ app's own code and stylesheet in 1.15.0:
 ## Compatibility
 
 - `minAppVersion` is 1.8.7 (`getLanguage`, `loadLocalStorage`).
+- `tsconfig.json` sets `esModuleInterop`, because the community directory's
+  review type-checks that way. Under it the `moment` export of `obsidian` is
+  not callable, so `src/indexer.ts` calls it through a locally declared
+  function type. With the option on, `npm run lint` and `npm run build` fail
+  on a direct `moment(...)` call the same way the review does.
 - Settings are declared through `getSettingDefinitions()` for Obsidian 1.13+
   and rendered by `display()` on older versions, from one shared description.
 - The date format setting accepts any Moment.js pattern; the default
@@ -148,10 +157,11 @@ Manual check: copy `main.js`, `manifest.json` and `styles.css` to
 `versions.json`. Pushing the tag (no `v` prefix) runs
 `.github/workflows/release.yml`, which builds, signs a build provenance
 attestation and attaches the three files to a draft release; the draft then
-has to be published by hand. Submission to the community directory happens
-through community.obsidian.md and reads `manifest.json` from the default
-branch. The plugin id (`recurrent-dates`) cannot change now that the first
-release is public.
+has to be published by hand. The plugin was submitted to the community
+directory once, through community.obsidian.md; later versions reach it through
+new GitHub releases. The directory reads `manifest.json` from the default
+branch and runs its automated review again for each release. The plugin id
+(`recurrent-dates`) cannot change now that the first release is public.
 
 Pushing workflow files over HTTPS needs a GitHub token with the `workflow`
 scope.

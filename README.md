@@ -15,9 +15,9 @@ links were enough.
 
 <img src="docs/images/block.png" width="720" alt="The On this day list inside a daily note: entries from 1865 to 2025, grouped by year, with born, died and daily note badges">
 
-> **Not in Obsidian's community directory yet.** Until it is listed, install it
-> from the [latest release](https://github.com/kenkyuusha/recurrent-dates/releases/latest),
-> as described under [Installing](#installing).
+> **Available in Obsidian's community directory:**
+> [Recurrent Dates](https://community.obsidian.md/plugins/recurrent-dates).
+> See [Installing](#installing).
 
 ## Contents
 
@@ -269,9 +269,11 @@ back to English. The settings tab is in English.
 - **What it stores.** Its settings, in the plugin's `data.json`. On each
   device, in Obsidian's local storage: which blocks you folded, and a flag
   that the panel was already added to the sidebar.
-- **What it reads.** Link positions come from Obsidian's in-memory metadata
-  cache, so starting the plugin does not read your files. The text of a note
-  is read only when that note has something on the day being shown.
+- **What it reads.** To build its index the plugin goes through every Markdown
+  note in the vault, but only through what Obsidian already keeps in memory
+  about it: its name and the positions of its links. Starting the plugin does
+  not read your files. The text of a note is read only when that note has
+  something on the day being shown.
 
 ## Installing
 
@@ -282,7 +284,12 @@ are welcome.
 
 ### From the community directory
 
-Not available yet. This section will be updated when the plugin is listed.
+1. In Obsidian, open **Settings → Community plugins** and turn off Restricted
+   mode if it is on.
+2. Select **Browse** and search for **Recurrent Dates**. You can also open the
+   plugin's [directory page](https://community.obsidian.md/plugins/recurrent-dates)
+   and select **Add to Obsidian**.
+3. Select **Install**, then **Enable**.
 
 ### From a release
 
@@ -310,9 +317,11 @@ repository folder. Continue from step 2 above with those three files.
 
 ### On your phone
 
-The plugin's folder has to reach the phone the same way the rest of your
-vault does. After it has synced, enable **Recurrent Dates** under
-**Settings → Community plugins** on the phone and restart Obsidian.
+Community plugins are installed on each device. Install Recurrent Dates from
+the directory on the phone as well. If you installed it by hand, the plugin's
+folder has to reach the phone the same way the rest of your vault does; after
+it has synced, enable **Recurrent Dates** under **Settings → Community
+plugins** on the phone and restart Obsidian.
 
 ## Troubleshooting
 
@@ -320,9 +329,10 @@ vault does. After it has synced, enable **Recurrent Dates** under
 device. Check that its files have synced, that it is enabled there under
 Community plugins, and restart Obsidian.
 
-**I cannot find the plugin in the community plugin browser.** It is not in
-the directory yet. A plugin installed by hand appears under **Installed
-plugins**, not in the browser.
+**The search in Obsidian does not find the plugin.** Open its
+[directory page](https://community.obsidian.md/plugins/recurrent-dates) and
+select **Add to Obsidian**, or install it from a release as described above. A
+plugin installed by hand appears under **Installed plugins**.
 
 **A date I linked does not show up.** Check, in this order:
 
@@ -376,13 +386,9 @@ pieces fit together and which rules are covered by tests.
 Test data is invented or refers to well-known public facts. Please do not
 paste lines from real notes into tests or issues.
 
-Bug reports and pull requests are welcome. For a date that is read wrongly, the
-most useful report is the line itself with anything private replaced, plus your
-Obsidian version and platform.
-
-To cut a release, run `npm version patch` (or `minor` / `major`) and push the
-tag. The release workflow builds the plugin and attaches `main.js`,
-`manifest.json` and `styles.css` to a draft GitHub release.
+Bug reports and pull requests are welcome. [CONTRIBUTING.md](CONTRIBUTING.md)
+says what a useful report contains, what a change needs, and how releases are
+cut.
 
 ## License
 
