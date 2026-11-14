@@ -17,7 +17,16 @@
 		"on-this-day",
 		"anniversaries"
 	],
+	"author": "kenkyuusha",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kenkyuusha/recurrent-dates.git"
+	},
+	"bugs": {
+		"url": "https://github.com/kenkyuusha/recurrent-dates/issues"
+	},
+	"homepage": "https://github.com/kenkyuusha/recurrent-dates#readme",
 	"devDependencies": {
 		"@eslint/js": "^9.39.4",
 		"@types/node": "^22.15.17",
