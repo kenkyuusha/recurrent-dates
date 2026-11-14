@@ -4,12 +4,10 @@
 - Owner: kenkyuusha
 - Updated: 2026-11-14
 - Status: 0.1.0 built and unit tested; source published on GitHub, no release
-  yet, not submitted to the community directory. Seen working in the app on
-  2026-11-14: the sidebar panel on desktop Obsidian 1.15.0 and the
-  `recurrent-dates` code block on Obsidian mobile (iOS). Not yet checked in
-  the app: opening an entry, day navigation, the settings tab, the sidebar
-  panel on mobile, and collapsing the code block (its layout was checked only
-  on a rendering stand outside the app).
+  yet, not submitted to the community directory. Checked in the app by the
+  owner on 2026-11-14, on desktop Obsidian 1.15.0 and on Obsidian mobile
+  (iOS): reported working in full, including opening notes from the list.
+  Windows, Linux and Android have not been tried.
 
 User-facing behaviour is described in the [README](../README.md). This
 document covers how the plugin is built and what must keep holding.
