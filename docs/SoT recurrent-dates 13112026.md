@@ -4,10 +4,10 @@
 - Owner: kenkyuusha
 - Updated: 2026-11-14
 - Status: 0.1.0 built and unit tested; not yet released or submitted to the
-  community directory. The sidebar panel was seen loading and listing the
-  current day correctly on desktop Obsidian 1.15.0 (2026-11-14). Not yet
-  checked in the app: opening an entry, day navigation, the code block, the
-  settings tab, and anything on mobile.
+  community directory. Seen working in the app on 2026-11-14: the sidebar
+  panel on desktop Obsidian 1.15.0 and the `recurrent-dates` code block on
+  Obsidian mobile (iOS). Not yet checked in the app: opening an entry, day
+  navigation, the settings tab, and the sidebar panel on mobile.
 
 User-facing behaviour is described in the [README](../README.md). This
 document covers how the plugin is built and what must keep holding.
@@ -114,9 +114,14 @@ Manual check: copy `main.js`, `manifest.json` and `styles.css` to
 
 `npm version <patch|minor|major>` updates `package.json`, `manifest.json` and
 `versions.json`. Pushing the tag (no `v` prefix) runs
-`.github/workflows/release.yml`, which builds and attaches the three files to
-a draft release. Submission to the community directory happens through
-community.obsidian.md and reads `manifest.json` from the default branch.
+`.github/workflows/release.yml`, which builds, signs a build provenance
+attestation and attaches the three files to a draft release; the draft then
+has to be published by hand. Submission to the community directory happens
+through community.obsidian.md and reads `manifest.json` from the default
+branch. Neither workflow has run yet: the repository has not been pushed.
+
+Pushing workflow files over HTTPS needs a GitHub token with the `workflow`
+scope.
 
 ## Open questions
 
