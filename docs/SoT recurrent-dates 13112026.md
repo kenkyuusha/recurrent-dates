@@ -2,10 +2,12 @@
 
 - Project: Recurrent Dates, an Obsidian community plugin (id `recurrent-dates`)
 - Owner: kenkyuusha
-- Updated: 2026-11-13
+- Updated: 2026-11-14
 - Status: 0.1.0 built and unit tested; not yet released or submitted to the
-  community directory. Behaviour inside the Obsidian app (desktop and mobile)
-  has not been verified yet.
+  community directory. The sidebar panel was seen loading and listing the
+  current day correctly on desktop Obsidian 1.15.0 (2026-11-14). Not yet
+  checked in the app: opening an entry, day navigation, the code block, the
+  settings tab, and anything on mobile.
 
 User-facing behaviour is described in the [README](../README.md). This
 document covers how the plugin is built and what must keep holding.
