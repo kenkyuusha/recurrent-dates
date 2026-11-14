@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.2 (2026-11-14)
 
 - Fixed: a block inside a note named after a date counted ages from the
   current year. It now counts from that note's year, so an old daily note
