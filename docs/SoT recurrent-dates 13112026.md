@@ -3,11 +3,13 @@
 - Project: Recurrent Dates, an Obsidian community plugin (id `recurrent-dates`)
 - Owner: kenkyuusha
 - Updated: 2026-11-14
-- Status: 0.1.0 built and unit tested; not yet released or submitted to the
-  community directory. Seen working in the app on 2026-11-14: the sidebar
-  panel on desktop Obsidian 1.15.0 and the `recurrent-dates` code block on
-  Obsidian mobile (iOS). Not yet checked in the app: opening an entry, day
-  navigation, the settings tab, and the sidebar panel on mobile.
+- Status: 0.1.0 built and unit tested; source published on GitHub, no release
+  yet, not submitted to the community directory. Seen working in the app on
+  2026-11-14: the sidebar panel on desktop Obsidian 1.15.0 and the
+  `recurrent-dates` code block on Obsidian mobile (iOS). Not yet checked in
+  the app: opening an entry, day navigation, the settings tab, the sidebar
+  panel on mobile, and collapsing the code block (its layout was checked only
+  on a rendering stand outside the app).
 
 User-facing behaviour is described in the [README](../README.md). This
 document covers how the plugin is built and what must keep holding.
@@ -52,6 +54,7 @@ with how long ago it was. The data is the user's existing date links
 | `src/ui/codeblock.ts` | `recurrent-dates` code block with its collapsible header |
 | `src/main.ts` | Lifecycle, vault events, commands |
 | `tests/` | Vitest suites for `src/core`; `helpers/fake-vault.ts` stands in for the metadata cache |
+| `docs/images/` | README images, rendered from the plugin's own code with invented demo notes |
 
 ## Data flow
 
@@ -100,6 +103,13 @@ Each rule has tests in `tests/`.
   300 blocks are remembered, oldest dropped first.
 - The plugin's own code block never counts as content of a dated note.
 
+## Test data, examples and images
+
+Fixtures, documentation examples and README images use invented entries or
+well-known public facts. Nothing is copied from a real vault, and screenshots
+of a real vault are not committed. Commits are made with a GitHub noreply
+address.
+
 ## Interface conventions borrowed from the app
 
 These are Obsidian internals rather than documented API, checked against the
@@ -142,15 +152,14 @@ Manual check: copy `main.js`, `manifest.json` and `styles.css` to
 attestation and attaches the three files to a draft release; the draft then
 has to be published by hand. Submission to the community directory happens
 through community.obsidian.md and reads `manifest.json` from the default
-branch. Neither workflow has run yet: the repository has not been pushed.
+branch. The release workflow has not run yet. The plugin id
+(`recurrent-dates`) cannot change after the first public release.
 
 Pushing workflow files over HTTPS needs a GitHub token with the `workflow`
 scope.
 
 ## Open questions
 
-- Plugin name and id are working choices. The id cannot change after the first
-  public release.
 - Calendar markers: the Calendar plugin (1.5.10) exposes no public hook for
   other plugins to add day markers, so this is not implemented.
 - Custom date formats that include folders (for example `YYYY/MM/DD`) are not
