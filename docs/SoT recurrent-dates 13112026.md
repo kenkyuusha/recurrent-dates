@@ -3,8 +3,8 @@
 - Project: Recurrent Dates, an Obsidian community plugin (id `recurrent-dates`)
 - Owner: kenkyuusha
 - Updated: 2026-11-14
-- Status: 0.1.0 built and unit tested; source published on GitHub, no release
-  yet, not submitted to the community directory. Checked in the app by the
+- Status: 0.1.0 is the first release (tag `0.1.0`, 2026-11-14). Not yet
+  submitted to the community directory. Checked in the app by the
   owner on 2026-11-14, on desktop Obsidian 1.15.0 and on Obsidian mobile
   (iOS): reported working in full, including opening notes from the list.
   Windows, Linux and Android have not been tried.
@@ -150,8 +150,8 @@ Manual check: copy `main.js`, `manifest.json` and `styles.css` to
 attestation and attaches the three files to a draft release; the draft then
 has to be published by hand. Submission to the community directory happens
 through community.obsidian.md and reads `manifest.json` from the default
-branch. The release workflow has not run yet. The plugin id
-(`recurrent-dates`) cannot change after the first public release.
+branch. The plugin id (`recurrent-dates`) cannot change now that the first
+release is public.
 
 Pushing workflow files over HTTPS needs a GitHub token with the `workflow`
 scope.

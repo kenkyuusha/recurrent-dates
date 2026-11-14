@@ -15,9 +15,9 @@ links were enough.
 
 <img src="docs/images/block.png" width="720" alt="The On this day list inside a daily note: entries from 1865 to 2025, grouped by year, with born, died and daily note badges">
 
-> **Status: pre-release.** Version 0.1.0 is not in Obsidian's community
-> directory yet and has no packaged release yet. Until then, see
-> [Installing](#installing) for how to build it from source.
+> **Not in Obsidian's community directory yet.** Until it is listed, install it
+> from the [latest release](https://github.com/kenkyuusha/recurrent-dates/releases/latest),
+> as described under [Installing](#installing).
 
 ## Contents
 
@@ -284,6 +284,16 @@ are welcome.
 
 Not available yet. This section will be updated when the plugin is listed.
 
+### From a release
+
+1. Open the [latest release](https://github.com/kenkyuusha/recurrent-dates/releases/latest)
+   and download `main.js`, `manifest.json` and `styles.css`.
+2. Create the folder `<your vault>/.obsidian/plugins/recurrent-dates/` and put
+   the three files in it.
+3. In Obsidian, open **Settings → Community plugins**, turn off Restricted
+   mode if it is on, reload the list of installed plugins and enable
+   **Recurrent Dates**.
+
 ### From source
 
 You need [Node.js](https://nodejs.org) 22 or newer and git.
@@ -295,18 +305,8 @@ npm install
 npm run build
 ```
 
-Then:
-
-1. Create the folder `<your vault>/.obsidian/plugins/recurrent-dates/`.
-2. Copy `main.js`, `manifest.json` and `styles.css` into it.
-3. In Obsidian, open **Settings → Community plugins**, turn off Restricted
-   mode if it is on, reload the list of installed plugins and enable
-   **Recurrent Dates**.
-
-### From a release
-
-Once the first release is published, its page will offer the same three
-files for download, so you can skip the build and start from step 1 above.
+The build writes `main.js` next to `manifest.json` and `styles.css` in the
+repository folder. Continue from step 2 above with those three files.
 
 ### On your phone
 
