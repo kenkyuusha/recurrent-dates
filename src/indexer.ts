@@ -14,10 +14,27 @@ import {
 import { buildDayModel, isInFolders, type CoreSettings, type DayModel } from './core/model';
 import { DEFAULT_DATE_FORMAT } from './settings';
 
+/** The part of a parsed Moment.js value this file reads. */
+interface ParsedMoment {
+	isValid(): boolean;
+	year(): number;
+	month(): number;
+	date(): number;
+}
+
+/**
+ * Strict Moment.js parsing, with its type spelled out here. Obsidian's typings
+ * declare `moment` as a module namespace, which is not callable when the
+ * compiler runs with `esModuleInterop`. The community directory's automated
+ * review type-checks that way, and without this type it sees every value read
+ * from the parsed date as untyped.
+ */
+type StrictMomentParser = (text: string, format: string, strict: true) => ParsedMoment;
+
 export function makeDateParser(format: string): DateParser {
 	if (format === DEFAULT_DATE_FORMAT) return parseIsoDate;
 	return (text) => {
-		const parsed = moment(text, format, true);
+		const parsed = (moment as unknown as StrictMomentParser)(text, format, true);
 		if (!parsed.isValid()) return null;
 		const year = parsed.year();
 		const month = parsed.month() + 1;
