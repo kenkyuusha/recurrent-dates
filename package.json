@@ -1,6 +1,6 @@
 {
 	"name": "recurrent-dates",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Obsidian plugin: see what happened on this day in any year, from the dates you already link in your notes.",
 	"main": "main.js",
 	"type": "module",

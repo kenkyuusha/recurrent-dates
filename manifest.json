@@ -1,7 +1,7 @@
 {
 	"id": "recurrent-dates",
 	"name": "Recurrent Dates",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"minAppVersion": "1.8.7",
 	"description": "See what happened on this day in any year, using the dates you already link in your notes.",
 	"author": "kenkyuusha",

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.1 (2026-11-14)
+
+No change in behaviour.
+
+- The Moment.js call that reads custom date formats now has its type spelled
+  out, so the community directory's automated review reads the code without
+  warnings.
+- A contributing guide.
+
 ## 0.1.0 (2026-11-14)
 
 First version.
