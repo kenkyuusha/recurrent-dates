@@ -110,7 +110,7 @@ const SECTIONS: Section[] = [
 				key: 'showFuture',
 				kind: 'toggle',
 				name: 'Show future years',
-				desc: 'Include dates that lie in years after the current one.',
+				desc: 'Include dates that lie in years after the one being viewed.',
 			},
 			{
 				key: 'newestFirst',

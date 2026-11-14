@@ -2,7 +2,7 @@
 // ABOUTME: example in a daily note template. Its header collapses and expands it.
 
 import { MarkdownRenderChild, setIcon } from 'obsidian';
-import { parseBlockSource, type BlockOptions } from '../core/block-options';
+import { parseBlockSource, resolveBlockView, type BlockOptions } from '../core/block-options';
 import { blockFoldKey } from '../core/fold-memory';
 import { dayLabel, strings } from '../core/i18n';
 import type RecurrentDatesPlugin from '../main';
@@ -115,12 +115,10 @@ export class RecurrentDatesBlock extends MarkdownRenderChild {
 		if (!this.options || !this.listEl) return;
 		const run = ++this.renderRun;
 
-		const today = this.plugin.today();
 		const own = this.plugin.indexer.index.ownDateOf(this.sourcePath);
-		const target = this.options.day ?? own ?? today;
-		const year = this.options.day?.year ?? today.year;
+		const target = resolveBlockView(this.options, own, this.plugin.today());
 
-		const model = await this.plugin.buildDay(year, target.month, target.day, this.sourcePath);
+		const model = await this.plugin.buildDay(target.year, target.month, target.day, this.sourcePath);
 		// A newer refresh started while this one was reading notes.
 		if (run !== this.renderRun) return;
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Fixed: a block inside a note named after a date counted ages from the
+  current year. It now counts from that note's year, so an old daily note
+  keeps the point of view of its day, and later years count as future there.
+
 ## 0.1.1 (2026-11-14)
 
 No change in behaviour.

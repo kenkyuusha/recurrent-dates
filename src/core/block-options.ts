@@ -1,7 +1,7 @@
 // ABOUTME: Reads the options a reader can write inside a `recurrent-dates` code
-// ABOUTME: block: which day it shows and whether it starts collapsed.
+// ABOUTME: block, and decides which day a block shows and from which year it counts.
 
-import { parseIsoDate } from './dates';
+import { parseIsoDate, type DayDate } from './dates';
 
 export interface BlockDay {
 	month: number;
@@ -57,4 +57,30 @@ export function parseBlockSource(source: string): BlockOptions | BlockOptionsErr
 		}
 	}
 	return options;
+}
+
+/** The calendar day a block shows, and the year its ages are counted from. */
+export interface BlockView {
+	year: number;
+	month: number;
+	day: number;
+}
+
+/**
+ * Decides what a block shows.
+ *
+ * - `date: YYYY-MM-DD` shows that day as seen from that year.
+ * - `date: MM-DD` shows that day as seen from the current year, whatever the
+ *   note is called.
+ * - Without a `date`, a note named after a date shows its own day as seen from
+ *   its own year, so an old daily note keeps the point of view of its day:
+ *   what was a year before it reads "1 year ago", and later years are future.
+ * - Anywhere else the block shows today.
+ */
+export function resolveBlockView(options: BlockOptions, ownDate: DayDate | null, today: DayDate): BlockView {
+	if (options.day) {
+		return { year: options.day.year ?? today.year, month: options.day.month, day: options.day.day };
+	}
+	const base = ownDate ?? today;
+	return { year: base.year, month: base.month, day: base.day };
 }

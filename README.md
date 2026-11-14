@@ -91,9 +91,10 @@ ago that was ("161 years ago") and the year itself. Each entry has:
 Years run from the oldest to the newest; a setting reverses that. Inside a
 year, births come first, then deaths, then other entries, then daily notes.
 
-The age is counted from the current year. A date in the current year reads
-"this year". If you switch on future years, a date that is still ahead reads
-"in 3 years".
+The age is counted from the year being viewed. That is the current year,
+except in a block inside a note named after a date, which counts from that
+note's year. A date in the viewed year reads "this year". If you switch on
+future years, a date that lies ahead of it reads "in 3 years".
 
 Opening a note from the list works like any link in Obsidian:
 
@@ -136,8 +137,11 @@ Put this in any note to embed the same list:
 It renders in Reading view and in Live Preview.
 
 **Which day it shows.** In a note whose name is a date, such as a daily note,
-the block shows that note's day. Anywhere else it shows today and follows it.
-The note that contains the block is never listed in its own block.
+the block shows that note's day as seen from that note's year. An old daily
+note therefore keeps the point of view of its day: what happened a year before
+it reads "1 year ago", and later years count as future. Anywhere else the
+block shows today and follows it. The note that contains the block is never
+listed in its own block.
 
 **Options.** Write one `key: value` pair per line inside the block:
 
@@ -202,7 +206,8 @@ Dates written as plain text, without the double brackets, are not picked up.
   matter, so `- **Created**: [[2024-01-05]]` is skipped too. The label is the
   whole text before the colon. The same list applies to property names.
 - **Excluded folders**, if you name any in the settings.
-- **Future years**, unless you turn them on.
+- **Future years**, meaning years after the one being viewed, unless you turn
+  them on.
 - **Empty daily notes.** A note named after the day in another year is listed
   as a **daily note** entry only if it holds something besides properties,
   navigation lines and this plugin's own block.
@@ -246,7 +251,7 @@ extend both lists in the settings.
 | --- | --- | --- |
 | Date format | `YYYY-MM-DD` | How dates are written in link targets and note names, as a [Moment.js pattern](https://momentjs.com/docs/#/displaying/format/). Use the same format as your daily notes |
 | Show daily notes from other years | on | Lists notes named after this day in other years, unless they hold only navigation |
-| Show future years | off | Includes dates in years after the current one |
+| Show future years | off | Includes dates in years after the one being viewed, which is normally the current year |
 | Newest year first | off | Puts the most recent year at the top |
 | Ignored labels | `created, date created, created date, date added, added, saved, updated, modified, date modified` | Labels of `label: [[date]]` lines to skip. Separate them with commas or new lines |
 | Excluded folders | none | Folders whose notes are left out, one per line |
@@ -341,7 +346,8 @@ plugin installed by hand appears under **Installed plugins**.
 3. The line is not a `label: [[date]]` line whose label is on the **Ignored
    labels** list.
 4. The note is not in an **Excluded folder**.
-5. The year is not in the future, or **Show future years** is on.
+5. The year is not in the future, or **Show future years** is on. In a block
+   inside an old daily note, every year after that note's year is future.
 6. The line is not a short line in a daily note that links to the day itself
    or a neighbouring day.
 7. You are not looking at the block inside the very note that holds the link:

@@ -97,6 +97,10 @@ Each rule has tests in `tests/`.
   dash-joined date links 1 to 125 years apart are birth then death.
 - One entry per note and date, with a count of further lines mentioning it.
 - February 29 entries are shown on February 28 in common years.
+- The viewed year is the current year in the panel. In a block it is the year
+  of a full `date` option, else the current year for a bare `date`, else the
+  year of the note the block sits in when that note is named after a date,
+  else the current year. Years after the viewed year are future.
 - "N years ago" is the viewed year minus the linked year; Russian uses the
   three plural forms.
 - A block starts in the state its `collapsed` option names, expanded when

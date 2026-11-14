@@ -150,6 +150,22 @@ describe('buildDayModel', () => {
 		]);
 	});
 
+	it('counts from the viewed year, so an old daily note keeps its own point of view', () => {
+		const host = 'daily/2024-12-08.md';
+		expect(summary(modelFor(VAULT, 2024, 12, 8, {}, host))).toEqual([
+			'1894 (130) death pafnuty chebyshev',
+			'2017 (7) event weather station',
+			'2024 (0) event 2024-12-09',
+		]);
+		expect(summary(modelFor(VAULT, 2024, 12, 8, { showFuture: true }, host))).toEqual([
+			'1894 (130) death pafnuty chebyshev',
+			'2017 (7) event weather station',
+			'2024 (0) event 2024-12-09',
+			'2026 (-2) note 2026-12-08',
+			'2027 (-3) event plans',
+		]);
+	});
+
 	it('reads property links from their property name', () => {
 		const vault = fakeVault({});
 		const model = buildDayModel({
