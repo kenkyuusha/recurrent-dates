@@ -1,14 +1,14 @@
-// ABOUTME: The `years-ago` code block: the same list embedded in a note, for
+// ABOUTME: The `recurrent-dates` code block: the same list embedded in a note, for
 // ABOUTME: example in a daily note template. Follows the note's own date by default.
 
 import { MarkdownRenderChild } from 'obsidian';
 import { parseIsoDate } from '../core/dates';
 import { dayLabel, strings } from '../core/i18n';
-import type YearsAgoPlugin from '../main';
+import type RecurrentDatesPlugin from '../main';
 import { renderDay } from './render';
 
-export const CODE_BLOCK_LANGUAGE = 'years-ago';
-export const HOVER_SOURCE_BLOCK = 'years-ago-block';
+export const CODE_BLOCK_LANGUAGE = 'recurrent-dates';
+export const HOVER_SOURCE_BLOCK = 'recurrent-dates-block';
 
 interface BlockDay {
 	month: number;
@@ -38,12 +38,12 @@ export function parseBlockSource(source: string): { day: BlockDay | null } | { e
 	return { day };
 }
 
-export class YearsAgoBlock extends MarkdownRenderChild {
+export class RecurrentDatesBlock extends MarkdownRenderChild {
 	private renderRun = 0;
 
 	constructor(
 		containerEl: HTMLElement,
-		private plugin: YearsAgoPlugin,
+		private plugin: RecurrentDatesPlugin,
 		private source: string,
 		private sourcePath: string,
 	) {
@@ -51,7 +51,7 @@ export class YearsAgoBlock extends MarkdownRenderChild {
 	}
 
 	onload(): void {
-		this.containerEl.addClass('years-ago-block');
+		this.containerEl.addClass('recurrent-dates-block');
 		this.plugin.blocks.add(this);
 		void this.refresh();
 	}
@@ -65,7 +65,7 @@ export class YearsAgoBlock extends MarkdownRenderChild {
 		const parsed = parseBlockSource(this.source);
 		if ('error' in parsed) {
 			this.containerEl.empty();
-			this.containerEl.createDiv({ cls: 'years-ago-error', text: parsed.error });
+			this.containerEl.createDiv({ cls: 'recurrent-dates-error', text: parsed.error });
 			return;
 		}
 
@@ -79,11 +79,11 @@ export class YearsAgoBlock extends MarkdownRenderChild {
 
 		this.containerEl.empty();
 		const lang = this.plugin.lang;
-		const title = this.containerEl.createDiv({ cls: 'years-ago-block-title' });
+		const title = this.containerEl.createDiv({ cls: 'recurrent-dates-block-title' });
 		title.createSpan({ text: strings(lang).viewTitle });
-		title.createSpan({ cls: 'years-ago-block-date', text: dayLabel(target.month, target.day, lang) });
+		title.createSpan({ cls: 'recurrent-dates-block-date', text: dayLabel(target.month, target.day, lang) });
 
-		renderDay(this.containerEl.createDiv({ cls: 'years-ago-list' }), model, {
+		renderDay(this.containerEl.createDiv({ cls: 'recurrent-dates-list' }), model, {
 			app: this.plugin.app,
 			lang,
 			hoverSource: HOVER_SOURCE_BLOCK,

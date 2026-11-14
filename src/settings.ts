@@ -11,9 +11,9 @@ import {
 } from 'obsidian';
 import { normalizeLabel } from './core/classify';
 import type { CoreSettings } from './core/model';
-import type YearsAgoPlugin from './main';
+import type RecurrentDatesPlugin from './main';
 
-export interface YearsAgoSettings {
+export interface RecurrentDatesSettings {
 	/** Moment.js pattern of date link targets and daily note names. */
 	dateFormat: string;
 	/** Comma or newline separated labels, as typed. */
@@ -30,7 +30,7 @@ export interface YearsAgoSettings {
 
 export const DEFAULT_DATE_FORMAT = 'YYYY-MM-DD';
 
-export const DEFAULT_SETTINGS: YearsAgoSettings = {
+export const DEFAULT_SETTINGS: RecurrentDatesSettings = {
 	dateFormat: DEFAULT_DATE_FORMAT,
 	ignoredLabels:
 		'created, date created, created date, date added, added, saved, updated, modified, date modified',
@@ -51,11 +51,11 @@ function splitList(text: string): string[] {
 }
 
 /** The date format to index with; an emptied field falls back to the default. */
-export function effectiveDateFormat(settings: YearsAgoSettings): string {
+export function effectiveDateFormat(settings: RecurrentDatesSettings): string {
 	return settings.dateFormat.trim() || DEFAULT_DATE_FORMAT;
 }
 
-export function toCoreSettings(settings: YearsAgoSettings): CoreSettings {
+export function toCoreSettings(settings: RecurrentDatesSettings): CoreSettings {
 	return {
 		ignoredLabels: splitList(settings.ignoredLabels).map(normalizeLabel),
 		excludedFolders: settings.excludedFolders
@@ -74,7 +74,7 @@ export function toCoreSettings(settings: YearsAgoSettings): CoreSettings {
 	};
 }
 
-type SettingKey = keyof YearsAgoSettings;
+type SettingKey = keyof RecurrentDatesSettings;
 
 interface Field {
 	key: SettingKey;
@@ -173,10 +173,10 @@ function toDefinition(field: Field): SettingDefinition {
 	return { ...base, control: { type: 'text', key: field.key, placeholder: DEFAULT_DATE_FORMAT } };
 }
 
-export class YearsAgoSettingTab extends PluginSettingTab {
+export class RecurrentDatesSettingTab extends PluginSettingTab {
 	constructor(
 		app: App,
-		private plugin: YearsAgoPlugin,
+		private plugin: RecurrentDatesPlugin,
 	) {
 		super(app, plugin);
 	}
@@ -214,7 +214,7 @@ export class YearsAgoSettingTab extends PluginSettingTab {
 				toggle.setValue(current === true).onChange((value) => void this.store(field.key, value)),
 			);
 		} else if (field.kind === 'textarea') {
-			setting.setClass('years-ago-setting-wide').addTextArea((area) =>
+			setting.setClass('recurrent-dates-setting-wide').addTextArea((area) =>
 				area.setValue(String(current)).onChange((value) => void this.store(field.key, value)),
 			);
 		} else {

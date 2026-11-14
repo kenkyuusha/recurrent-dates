@@ -1,4 +1,4 @@
-# Years Ago
+# Recurrent Dates
 
 An [Obsidian](https://obsidian.md) plugin that shows what happened on this day
 in any year, using the dates you already link in your notes.
@@ -9,7 +9,7 @@ Nothing has to be tagged or moved into frontmatter: a link to a date is enough.
 
 ## What it shows
 
-For the selected day, Years Ago lists every note that links to that calendar
+For the selected day, Recurrent Dates lists every note that links to that calendar
 day in any year, grouped by year:
 
 - the note's name and how long ago the date was;
@@ -25,11 +25,11 @@ plugin on, holding Ctrl or Cmd while hovering shows a preview.
 - **Sidebar panel.** Run **Open on this day** from the command palette or use
   the ribbon icon. The panel follows today and has arrows to step to
   neighbouring days. It works on desktop and mobile.
-- **Inside a note.** Add a `years-ago` code block, for example to your daily
+- **Inside a note.** Add a `recurrent-dates` code block, for example to your daily
   note template:
 
   ````markdown
-  ```years-ago
+  ```recurrent-dates
   ```
   ````
 
@@ -81,7 +81,7 @@ and Russian; other languages fall back to English.
 
 ## Privacy
 
-Years Ago works entirely inside your vault. It makes no network requests,
+Recurrent Dates works entirely inside your vault. It makes no network requests,
 collects nothing, and never modifies your notes. It reads link positions from
 Obsidian's metadata cache and reads note text only for the day being shown.
 
@@ -91,9 +91,9 @@ Until the plugin is in the community directory, install it by hand:
 
 1. Download `main.js`, `manifest.json` and `styles.css` from the latest
    release.
-2. Put them in `<your vault>/.obsidian/plugins/years-ago/`.
+2. Put them in `<your vault>/.obsidian/plugins/recurrent-dates/`.
 3. In Obsidian, open **Settings → Community plugins**, reload the list and
-   enable **Years Ago**.
+   enable **Recurrent Dates**.
 
 Requires Obsidian 1.8.7 or newer.
 
@@ -108,7 +108,7 @@ npm run build   # type-check and produce a production main.js
 ```
 
 The date logic lives in `src/core` and has no dependency on Obsidian, so it is
-tested in plain Node. See [the architecture notes](docs/SoT%20years-ago%2013112026.md)
+tested in plain Node. See [the architecture notes](docs/SoT%20recurrent-dates%2013112026.md)
 for how the pieces fit together.
 
 To cut a release, run `npm version patch` (or `minor` / `major`) and push the

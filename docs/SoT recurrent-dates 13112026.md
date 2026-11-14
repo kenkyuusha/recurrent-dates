@@ -1,6 +1,6 @@
-# Years Ago: source of truth
+# Recurrent Dates: source of truth
 
-- Project: Years Ago, an Obsidian community plugin (id `years-ago`)
+- Project: Recurrent Dates, an Obsidian community plugin (id `recurrent-dates`)
 - Owner: kenkyuusha
 - Updated: 2026-11-13
 - Status: 0.1.0 built and unit tested; not yet released or submitted to the
@@ -42,7 +42,7 @@ with how long ago it was. The data is the user's existing date links
 | `src/settings.ts` | Stored settings, defaults, conversion to core settings, settings tab |
 | `src/ui/render.ts` | Shared DOM rendering of a day's list |
 | `src/ui/view.ts` | Sidebar `ItemView` with day navigation |
-| `src/ui/codeblock.ts` | `years-ago` code block |
+| `src/ui/codeblock.ts` | `recurrent-dates` code block |
 | `src/main.ts` | Lifecycle, vault events, commands |
 | `tests/` | Vitest suites for `src/core`; `helpers/fake-vault.ts` stands in for the metadata cache |
 
@@ -106,7 +106,7 @@ npm run build
 ```
 
 Manual check: copy `main.js`, `manifest.json` and `styles.css` to
-`<vault>/.obsidian/plugins/years-ago/`, enable the plugin, and open the panel.
+`<vault>/.obsidian/plugins/recurrent-dates/`, enable the plugin, and open the panel.
 
 ## Release
 

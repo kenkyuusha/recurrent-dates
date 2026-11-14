@@ -10,23 +10,23 @@ import {
 	DEFAULT_SETTINGS,
 	effectiveDateFormat,
 	toCoreSettings,
-	YearsAgoSettingTab,
-	type YearsAgoSettings,
+	RecurrentDatesSettingTab,
+	type RecurrentDatesSettings,
 } from './settings';
-import { CODE_BLOCK_LANGUAGE, HOVER_SOURCE_BLOCK, YearsAgoBlock } from './ui/codeblock';
-import { VIEW_TYPE_YEARS_AGO, YearsAgoView } from './ui/view';
+import { CODE_BLOCK_LANGUAGE, HOVER_SOURCE_BLOCK, RecurrentDatesBlock } from './ui/codeblock';
+import { VIEW_TYPE_RECURRENT_DATES, RecurrentDatesView } from './ui/view';
 
 const REFRESH_DELAY_MS = 400;
 const DAY_CHECK_INTERVAL_MS = 60_000;
 /** Per-device flag: the panel is added to the sidebar once, then left to the user. */
-const VIEW_ADDED_KEY = 'years-ago-view-added';
+const VIEW_ADDED_KEY = 'recurrent-dates-view-added';
 
-export default class YearsAgoPlugin extends Plugin {
-	settings: YearsAgoSettings = { ...DEFAULT_SETTINGS };
+export default class RecurrentDatesPlugin extends Plugin {
+	settings: RecurrentDatesSettings = { ...DEFAULT_SETTINGS };
 	indexer!: VaultIndexer;
 	lang: Lang = 'en';
 	/** Code blocks currently on screen, refreshed together with the panel. */
-	readonly blocks = new Set<YearsAgoBlock>();
+	readonly blocks = new Set<RecurrentDatesBlock>();
 
 	private indexedFormat = DEFAULT_SETTINGS.dateFormat;
 	private lastDay = '';
@@ -41,12 +41,12 @@ export default class YearsAgoPlugin extends Plugin {
 		this.indexer = new VaultIndexer(this.app, this.indexedFormat);
 		const title = strings(this.lang).viewTitle;
 
-		this.registerView(VIEW_TYPE_YEARS_AGO, (leaf) => new YearsAgoView(leaf, this));
-		this.registerHoverLinkSource(VIEW_TYPE_YEARS_AGO, { display: `${title} (panel)`, defaultMod: true });
+		this.registerView(VIEW_TYPE_RECURRENT_DATES, (leaf) => new RecurrentDatesView(leaf, this));
+		this.registerHoverLinkSource(VIEW_TYPE_RECURRENT_DATES, { display: `${title} (panel)`, defaultMod: true });
 		this.registerHoverLinkSource(HOVER_SOURCE_BLOCK, { display: `${title} (block)`, defaultMod: true });
 
 		this.registerMarkdownCodeBlockProcessor(CODE_BLOCK_LANGUAGE, (source, el, ctx) => {
-			ctx.addChild(new YearsAgoBlock(el, this, source, ctx.sourcePath));
+			ctx.addChild(new RecurrentDatesBlock(el, this, source, ctx.sourcePath));
 		});
 
 		this.addRibbonIcon('calendar-clock', title, () => void this.activateView());
@@ -55,7 +55,7 @@ export default class YearsAgoPlugin extends Plugin {
 			name: 'Open on this day',
 			callback: () => void this.activateView(),
 		});
-		this.addSettingTab(new YearsAgoSettingTab(this.app, this));
+		this.addSettingTab(new RecurrentDatesSettingTab(this.app, this));
 
 		// The metadata cache is only complete once the workspace has loaded.
 		this.app.workspace.onLayoutReady(() => this.start());
@@ -102,10 +102,10 @@ export default class YearsAgoPlugin extends Plugin {
 
 	async activateView(): Promise<void> {
 		const { workspace } = this.app;
-		let leaf = workspace.getLeavesOfType(VIEW_TYPE_YEARS_AGO)[0] ?? null;
+		let leaf = workspace.getLeavesOfType(VIEW_TYPE_RECURRENT_DATES)[0] ?? null;
 		if (!leaf) {
 			leaf = workspace.getRightLeaf(false);
-			await leaf?.setViewState({ type: VIEW_TYPE_YEARS_AGO, active: true });
+			await leaf?.setViewState({ type: VIEW_TYPE_RECURRENT_DATES, active: true });
 		}
 		if (leaf) await workspace.revealLeaf(leaf);
 	}
@@ -114,15 +114,15 @@ export default class YearsAgoPlugin extends Plugin {
 	private async addViewOnce(): Promise<void> {
 		if (this.app.loadLocalStorage(VIEW_ADDED_KEY)) return;
 		this.app.saveLocalStorage(VIEW_ADDED_KEY, '1');
-		if (this.app.workspace.getLeavesOfType(VIEW_TYPE_YEARS_AGO).length > 0) return;
-		await this.app.workspace.getRightLeaf(false)?.setViewState({ type: VIEW_TYPE_YEARS_AGO, active: false });
+		if (this.app.workspace.getLeavesOfType(VIEW_TYPE_RECURRENT_DATES).length > 0) return;
+		await this.app.workspace.getRightLeaf(false)?.setViewState({ type: VIEW_TYPE_RECURRENT_DATES, active: false });
 	}
 
 	private refreshAll(): void {
 		if (!this.started) return;
-		for (const leaf of this.app.workspace.getLeavesOfType(VIEW_TYPE_YEARS_AGO)) {
+		for (const leaf of this.app.workspace.getLeavesOfType(VIEW_TYPE_RECURRENT_DATES)) {
 			// Sidebar tabs that were never shown are deferred and have no view yet.
-			if (leaf.view instanceof YearsAgoView) void leaf.view.refresh();
+			if (leaf.view instanceof RecurrentDatesView) void leaf.view.refresh();
 		}
 		for (const block of this.blocks) void block.refresh();
 	}
@@ -144,7 +144,7 @@ export default class YearsAgoPlugin extends Plugin {
 	}
 
 	async loadSettings(): Promise<void> {
-		const stored = (await this.loadData()) as Partial<YearsAgoSettings> | null;
+		const stored = (await this.loadData()) as Partial<RecurrentDatesSettings> | null;
 		this.settings = { ...DEFAULT_SETTINGS, ...(stored ?? {}) };
 	}
 

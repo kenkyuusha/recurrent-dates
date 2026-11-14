@@ -4,12 +4,12 @@
 import { type HoverParent, type HoverPopover, ItemView, Platform, setIcon, type WorkspaceLeaf } from 'obsidian';
 import { addDays, sameDay, type DayDate } from '../core/dates';
 import { dayLabel, strings } from '../core/i18n';
-import type YearsAgoPlugin from '../main';
+import type RecurrentDatesPlugin from '../main';
 import { renderDay } from './render';
 
-export const VIEW_TYPE_YEARS_AGO = 'years-ago-view';
+export const VIEW_TYPE_RECURRENT_DATES = 'recurrent-dates-view';
 
-export class YearsAgoView extends ItemView implements HoverParent {
+export class RecurrentDatesView extends ItemView implements HoverParent {
 	/** Set by the Page preview core plugin while a preview from this panel is open. */
 	hoverPopover: HoverPopover | null = null;
 	/** The day being browsed, or null to follow today. */
@@ -21,13 +21,13 @@ export class YearsAgoView extends ItemView implements HoverParent {
 
 	constructor(
 		leaf: WorkspaceLeaf,
-		private plugin: YearsAgoPlugin,
+		private plugin: RecurrentDatesPlugin,
 	) {
 		super(leaf);
 	}
 
 	getViewType(): string {
-		return VIEW_TYPE_YEARS_AGO;
+		return VIEW_TYPE_RECURRENT_DATES;
 	}
 
 	getDisplayText(): string {
@@ -42,26 +42,26 @@ export class YearsAgoView extends ItemView implements HoverParent {
 		const text = strings(this.plugin.lang);
 		const root = this.contentEl;
 		root.empty();
-		root.addClass('years-ago-view');
+		root.addClass('recurrent-dates-view');
 
-		const header = root.createDiv({ cls: 'years-ago-header' });
+		const header = root.createDiv({ cls: 'recurrent-dates-header' });
 		const previous = header.createDiv({ cls: 'clickable-icon', attr: { 'aria-label': text.previousDay } });
 		setIcon(previous, 'chevron-left');
 		previous.addEventListener('click', () => this.shift(-1));
 
-		this.dateEl = header.createDiv({ cls: 'years-ago-date' });
+		this.dateEl = header.createDiv({ cls: 'recurrent-dates-date' });
 
 		const next = header.createDiv({ cls: 'clickable-icon', attr: { 'aria-label': text.nextDay } });
 		setIcon(next, 'chevron-right');
 		next.addEventListener('click', () => this.shift(1));
 
-		this.todayEl = root.createDiv({ cls: 'years-ago-today', text: text.today });
+		this.todayEl = root.createDiv({ cls: 'recurrent-dates-today', text: text.today });
 		this.todayEl.addEventListener('click', () => {
 			this.selected = null;
 			void this.refresh();
 		});
 
-		this.listEl = root.createDiv({ cls: 'years-ago-list' });
+		this.listEl = root.createDiv({ cls: 'recurrent-dates-list' });
 		await this.refresh();
 	}
 
@@ -94,7 +94,7 @@ export class YearsAgoView extends ItemView implements HoverParent {
 		renderDay(this.listEl, model, {
 			app: this.app,
 			lang: this.plugin.lang,
-			hoverSource: VIEW_TYPE_YEARS_AGO,
+			hoverSource: VIEW_TYPE_RECURRENT_DATES,
 			hoverParent: this,
 			onOpened: () => {
 				// On phones the panel lives in a drawer that covers the note.

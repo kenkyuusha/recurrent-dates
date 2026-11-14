@@ -6,7 +6,7 @@ First version.
 
 - "On this day" sidebar panel listing every note that links to the selected
   calendar day in any year, with day navigation.
-- `years-ago` code block that embeds the same list in a note.
+- `recurrent-dates` code block that embeds the same list in a note.
 - Birth and death detection from keywords and from `[[date]] - [[date]]`
   lifespans.
 - Filters for daily-note navigation lines, ignored labels, excluded folders

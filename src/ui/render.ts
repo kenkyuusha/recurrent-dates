@@ -25,22 +25,22 @@ async function openEntry(entry: Entry, ctx: RenderContext, pane: PaneType | bool
 
 function renderEntry(parent: HTMLElement, entry: Entry, ctx: RenderContext): void {
 	const text = strings(ctx.lang);
-	const el = parent.createDiv({ cls: ['years-ago-entry', `years-ago-kind-${entry.kind}`] });
+	const el = parent.createDiv({ cls: ['recurrent-dates-entry', `recurrent-dates-kind-${entry.kind}`] });
 	el.setAttr('role', 'link');
 	el.setAttr('tabindex', '0');
 
-	const titleEl = el.createDiv({ cls: 'years-ago-entry-title' });
-	titleEl.createSpan({ cls: 'years-ago-entry-name', text: entry.title });
+	const titleEl = el.createDiv({ cls: 'recurrent-dates-entry-title' });
+	titleEl.createSpan({ cls: 'recurrent-dates-entry-name', text: entry.title });
 	const kindText = text.kinds[entry.kind];
-	if (kindText.length > 0) titleEl.createSpan({ cls: 'years-ago-kind', text: kindText });
+	if (kindText.length > 0) titleEl.createSpan({ cls: 'recurrent-dates-kind', text: kindText });
 
 	if (entry.snippet.length > 0 || entry.extraMentions > 0) {
-		const snippetEl = el.createDiv({ cls: 'years-ago-entry-snippet' });
+		const snippetEl = el.createDiv({ cls: 'recurrent-dates-entry-snippet' });
 		for (const part of entry.snippet) {
-			snippetEl.createSpan({ cls: part.highlight ? 'years-ago-match' : undefined, text: part.text });
+			snippetEl.createSpan({ cls: part.highlight ? 'recurrent-dates-match' : undefined, text: part.text });
 		}
 		if (entry.extraMentions > 0) {
-			snippetEl.createSpan({ cls: 'years-ago-more', text: text.moreMentions(entry.extraMentions) });
+			snippetEl.createSpan({ cls: 'recurrent-dates-more', text: text.moreMentions(entry.extraMentions) });
 		}
 	}
 
@@ -69,14 +69,14 @@ function renderEntry(parent: HTMLElement, entry: Entry, ctx: RenderContext): voi
 export function renderDay(container: HTMLElement, model: DayModel, ctx: RenderContext): void {
 	container.empty();
 	if (model.total === 0) {
-		container.createDiv({ cls: 'years-ago-empty', text: strings(ctx.lang).empty });
+		container.createDiv({ cls: 'recurrent-dates-empty', text: strings(ctx.lang).empty });
 		return;
 	}
 	for (const group of model.groups) {
-		const groupEl = container.createDiv({ cls: 'years-ago-group' });
-		const header = groupEl.createDiv({ cls: 'years-ago-group-header' });
-		header.createSpan({ cls: 'years-ago-age', text: ageLabel(group.yearsAgo, ctx.lang) });
-		header.createSpan({ cls: 'years-ago-year', text: String(group.year) });
+		const groupEl = container.createDiv({ cls: 'recurrent-dates-group' });
+		const header = groupEl.createDiv({ cls: 'recurrent-dates-group-header' });
+		header.createSpan({ cls: 'recurrent-dates-age', text: ageLabel(group.yearsAgo, ctx.lang) });
+		header.createSpan({ cls: 'recurrent-dates-year', text: String(group.year) });
 		for (const entry of group.entries) renderEntry(groupEl, entry, ctx);
 	}
 }
